@@ -1,6 +1,6 @@
 <?php if (!defined('FW')) die('Forbidden');
 
-class Mailer_Sender
+class FW_Ext_Mailer_Sender
 {
 	private $config;
 
@@ -12,6 +12,7 @@ class Mailer_Sender
 	public function send($to, $subject, $message)
 	{
 		$config = $this->get_prepared_config();
+
 		if (!$config) {
 			return array(
 				'status'  => 0,
@@ -29,7 +30,7 @@ class Mailer_Sender
 		}
 	}
 
-	private function get_prepared_config()
+	public function get_prepared_config()
 	{
 		$settings = $this->config;
 		if (

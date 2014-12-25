@@ -31,10 +31,23 @@ class FW_Extension_Mailer extends FW_Extension
 
 	public function send($to, $subject, $message)
 	{
-		$sender = new Mailer_Sender(
+		$sender = new FW_Ext_Mailer_Sender(
 			$this->get_db_settings_option()
 		);
 
 		return $sender->send($to, $subject, $message);
+	}
+
+	/**
+	 * Check if extension settings options are valid
+	 * @return bool
+	 */
+	public function is_configured()
+	{
+		$sender = new FW_Ext_Mailer_Sender(
+			$this->get_db_settings_option()
+		);
+
+		return (bool)$sender->get_prepared_config();
 	}
 }
