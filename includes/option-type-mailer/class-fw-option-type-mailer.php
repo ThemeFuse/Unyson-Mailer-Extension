@@ -102,11 +102,16 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 					'desc'          => false,
 					'type'          => 'multi',
 					'inner-options' => array(
-						'from_name'    => array(
-							'label' => __( 'From Name', 'fw' ),
-							'desc'  => __( "The name you'll see in the From filed in your email client.", 'fw' ),
-							'type'  => 'text',
-							'value' => '',
+						'from-group' => array(
+							'type' => 'group',
+							'options' => array(
+								'from_name'    => array(
+									'label' => __( 'From Name', 'fw' ),
+									'desc'  => __( "The name you'll see in the From filed in your email client.", 'fw' ),
+									'type'  => 'text',
+									'value' => '',
+								),
+							)
 						),
 						'from_address' => array(
 							'label' => __( 'From Address', 'fw' ),
