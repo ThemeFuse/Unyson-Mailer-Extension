@@ -137,6 +137,8 @@ class FW_Ext_Mailer_Sender
 	{
 		$headers = array();
 
+		$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
 		$headers[] = "From:". htmlspecialchars($config['from_name'], null, 'UTF-8')
 			." <". htmlspecialchars($config['from_address'], null, 'UTF-8') .">";
 
