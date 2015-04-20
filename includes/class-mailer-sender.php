@@ -1,5 +1,8 @@
 <?php if (!defined('FW')) die('Forbidden');
 
+/**
+ * @deprecated
+ */
 class FW_Ext_Mailer_Sender
 {
 	private $config;
@@ -9,8 +12,13 @@ class FW_Ext_Mailer_Sender
 		$this->config = $config;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public function send($to, $subject, $message)
 	{
+		trigger_error('Deprecated', E_USER_WARNING);
+
 		$config = $this->get_prepared_config();
 
 		if (!$config) {
@@ -30,8 +38,13 @@ class FW_Ext_Mailer_Sender
 		}
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public function get_prepared_config()
 	{
+		trigger_error('Deprecated', E_USER_WARNING);
+
 		$settings = $this->config;
 		if (
 			!$settings
