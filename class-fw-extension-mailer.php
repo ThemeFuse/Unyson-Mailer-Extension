@@ -38,13 +38,6 @@ class FW_Extension_Mailer extends FW_Extension
 
 	public function send($to, $subject, $message)
 	{
-		if (!$this->is_configured()) {
-			return array(
-				'status'  => 0,
-				'message' => __('Invalid email configuration', 'fw')
-			);
-		}
-
 		$send_method = $this->get_send_methods(
 			$this->get_db_settings_option('method')
 		);
@@ -53,6 +46,17 @@ class FW_Extension_Mailer extends FW_Extension
 			return array(
 				'status'  => 0,
 				'message' => __('Invalid send method', 'fw')
+			);
+		}
+
+		if (is_wp_error(
+			$send_method_configuration = $send_method->prepare_settings_options_values(
+				$this->get_db_settings_option($send_method->get_id())
+			)
+		)) {
+			return array(
+				'status'  => 0,
+				'message' => $send_method_configuration->get_error_message()
 			);
 		}
 

@@ -90,7 +90,7 @@ class FW_Ext_Mailer_Send_Method_SMTP extends FW_Ext_Mailer_Send_Method {
 			);
 		}
 
-		if (fw_is_valid_domain_name($conf['host'])) {
+		if (!fw_is_valid_domain_name($conf['host'])) {
 			return new WP_Error(
 				'invalid_host',
 				__('Invalid host', 'fw')
