@@ -26,7 +26,8 @@ abstract class FW_Ext_Mailer_Send_Method
 	/**
 	 * @param array $settings_options_values
 	 * @param FW_Ext_Mailer_Email $email
+	 * @param array $data
 	 * @return bool|WP_Error
 	 */
-	abstract public function send(FW_Ext_Mailer_Email $email, $settings_options_values);
+	abstract public function send(FW_Ext_Mailer_Email $email, $settings_options_values, $data);
 }

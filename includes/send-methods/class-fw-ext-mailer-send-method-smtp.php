@@ -120,9 +120,10 @@ class FW_Ext_Mailer_Send_Method_SMTP extends FW_Ext_Mailer_Send_Method {
 	/**
 	 * @param array $settings_options_values
 	 * @param FW_Ext_Mailer_Email $email
+	 * @param array $data
 	 * @return bool|WP_Error
 	 */
-	public function send(FW_Ext_Mailer_Email $email, $settings_options_values) {
+	public function send(FW_Ext_Mailer_Email $email, $settings_options_values, $data) {
 		if (!class_exists('PHPMailer')) {
 			require_once ABSPATH . WPINC . '/class-phpmailer.php';
 		}
