@@ -48,7 +48,7 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 				$methods_options['method-' . $method->get_id()] = array(
 					'type' => 'group',
 					'attr' => array(
-						'data-method' => 'smtp'
+						'data-method' => $method->get_id()
 					),
 					'options' => array(
 						$method->get_id() => array(
