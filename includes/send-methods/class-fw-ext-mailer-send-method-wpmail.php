@@ -37,7 +37,7 @@ class FW_Ext_Mailer_Send_Method_WPMail extends FW_Ext_Mailer_Send_Method {
 	 * @param array $data
 	 * @return bool|WP_Error
 	 */
-	public function send(FW_Ext_Mailer_Email $email, $settings_options_values, $data) {
+	public function send(FW_Ext_Mailer_Email $email, $settings_options_values, $data = array()) {
 		$result = wp_mail(
 			$email->get_to(),
 			$email->get_subject(),

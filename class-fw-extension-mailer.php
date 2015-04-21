@@ -36,7 +36,7 @@ class FW_Extension_Mailer extends FW_Extension
 		);
 	}
 
-	public function send($to, $subject, $message, $data)
+	public function send($to, $subject, $message, $data = array())
 	{
 		$send_method = $this->get_send_methods(
 			$this->get_db_settings_option('method')
@@ -65,7 +65,11 @@ class FW_Extension_Mailer extends FW_Extension
 		$email->set_subject($subject);
 		$email->set_body($message);
 
-		$result = $send_method->send($email, $this->get_db_settings_option($send_method->get_id()), $data);
+		$result = $send_method->send(
+			$email,
+			$this->get_db_settings_option($send_method->get_id()),
+			$data
+		);
 
 		return is_wp_error($result)
 			? array(
