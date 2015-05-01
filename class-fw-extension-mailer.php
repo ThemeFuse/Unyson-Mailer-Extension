@@ -38,7 +38,7 @@ class FW_Extension_Mailer extends FW_Extension
 
 	public function send($to, $subject, $message, $data = array())
 	{
-		$send_method = $this->get_send_methods(
+		$send_method = $this->get_send_method(
 			$this->get_db_settings_option('method')
 		);
 
@@ -89,25 +89,25 @@ class FW_Extension_Mailer extends FW_Extension
 	public function is_configured()
 	{
 		if (is_null($this->is_configured_cache)) {
-			$send_method = $this->get_send_methods(
+			$send_method = $this->get_send_method(
 				$this->get_db_settings_option('method')
 			);
 
-			if (!$send_method) {
-				return false;
+			if ($send_method) {
+				$this->is_configured_cache = !is_wp_error(
+					$send_method->prepare_settings_options_values(
+						$this->get_db_settings_option($send_method->get_id())
+					)
+				);
+			} else {
+				$this->is_configured_cache = false;
 			}
-
-			$this->is_configured_cache = !is_wp_error(
-				$send_method->prepare_settings_options_values(
-					$this->get_db_settings_option($send_method->get_id())
-				)
-			);
 		}
 
 		return $this->is_configured_cache;
 	}
 
-	public function get_send_methods($method_id = null)
+	public function get_send_methods()
 	{
 		if (empty($this->send_methods)) {
 			require_once dirname(__FILE__) . '/includes/classes/class-fw-ext-mailer-email.php';
@@ -119,14 +119,17 @@ class FW_Extension_Mailer extends FW_Extension
 			}
 		}
 
-		if ($method_id) {
-			if (isset($this->send_methods[$method_id])) {
-				return $this->send_methods[$method_id];
-			} else {
-				return null;
-			}
+		return $this->send_methods;
+	}
+
+	public function get_send_method($method_id)
+	{
+		$this->get_send_methods(); // init cache
+
+		if (isset($this->send_methods[$method_id])) {
+			return $this->send_methods[$method_id];
 		} else {
-			return $this->send_methods;
+			return null;
 		}
 	}
 }
