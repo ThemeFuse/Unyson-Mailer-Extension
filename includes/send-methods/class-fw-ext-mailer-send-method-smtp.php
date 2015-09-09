@@ -144,6 +144,7 @@ class FW_Ext_Mailer_Send_Method_SMTP extends FW_Ext_Mailer_Send_Method {
 		$mailer->SMTPAuth   = true;
 		$mailer->Username   = $config['username'];
 		$mailer->Password   = $config['password'];
+		$mailer->CharSet    = 'utf-8';
 
 		$mailer->From       = $email->get_from();
 		$mailer->FromName   = $email->get_from_name();
