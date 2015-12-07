@@ -172,6 +172,10 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 			);
 		}
 
+		/**
+		 * Return "nothing"
+		 * Prevent private smtp data to be saved/duplicated in post meta (somewhere else)
+		 */
 		return array(
 			'time' => time(), // prevent options modal html cache
 		);
