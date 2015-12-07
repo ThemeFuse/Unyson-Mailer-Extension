@@ -155,6 +155,14 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 	protected function _get_value_from_input( $option, $input_value ) {
 
 		if ( is_array( $input_value ) && ! empty( $input_value ) ) {
+			/**
+			 * Doing a database save in get_value_from_input() is wrong
+			 * because this is not an actual save.
+			 * But this option type use is limited, it's used only in one place
+			 * and it works, so we decided to not create a new "deep save trigger" mechanism
+			 * just for one option.
+			 * When such mechanism will be needed for general use, then we will figure out something.
+			 */
 			fw_ext( 'mailer' )->set_db_settings_option(
 				null,
 				fw_get_options_values_from_input(
