@@ -27,7 +27,15 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 	protected function _get_defaults() {
 		return array(
 			'label' => false,
-			'value' => array()
+			'value' => array(),
+			/**
+			 * At the moment this is no effect because there is no mechanism to trigger the 'save'
+			 * from post option save deep to each shortcode options
+			 */
+			'fw-storage' => array(
+				'type' => 'wp-option',
+				'wp-option' => 'fw_ext_settings_options:mailer',
+			),
 		);
 	}
 
@@ -156,7 +164,9 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 			);
 		}
 
-		return fw_ext( 'mailer' )->get_db_settings_option();
+		return array(
+			'time' => time(), // prevent options modal html cache
+		);
 	}
 }
 
