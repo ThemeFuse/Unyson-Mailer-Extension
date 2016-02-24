@@ -65,6 +65,10 @@ class FW_Extension_Mailer extends FW_Extension
 		$email->set_subject($subject);
 		$email->set_body($message);
 
+		if (!empty($data['reply_to']) && method_exists($email, 'set_reply_to')) {
+			$email->set_reply_to($data['reply_to']);
+		}
+
 		$result = $send_method->send(
 			$email,
 			$this->get_db_settings_option($send_method->get_id()),

@@ -157,6 +157,16 @@ class FW_Ext_Mailer_Send_Method_SMTP extends FW_Ext_Mailer_Send_Method {
 			$mailer->AddAddress($email->get_to());
 		}
 
+		if (method_exists($email, 'get_reply_to') && $email->get_reply_to()) {
+			if (is_array($email->get_reply_to())) {
+				foreach ($email->get_reply_to() as $to_address => $to_name) {
+					$mailer->addReplyTo($to_address, $to_name);
+				}
+			} else {
+				$mailer->addReplyTo($email->get_reply_to());
+			}
+		}
+
 		$mailer->Subject = $email->get_subject();
 		$mailer->Body    = $email->get_body();
 

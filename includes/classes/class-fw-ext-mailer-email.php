@@ -7,6 +7,12 @@ class FW_Ext_Mailer_Email {
 	protected $subject = '';
 	protected $body = '';
 
+	/**
+	 * @var string|array array('email' => 'Name')
+	 * @since 1.2.4
+	 */
+	protected $reply_to = '';
+
 	public function __construct() {
 		$this->set_from_name(
 			fw_ext('mailer')->get_db_settings_option('general/from_name')
@@ -58,5 +64,21 @@ class FW_Ext_Mailer_Email {
 
 	public function set_body($body) {
 		$this->body = $body;
+	}
+
+	/**
+	 * @return string|array
+	 * @since 1.2.4
+	 */
+	public function get_reply_to() {
+		return $this->reply_to;
+	}
+
+	/**
+	 * @param string|array $reply_to
+	 * @since 1.2.4
+	 */
+	public function set_reply_to($reply_to) {
+		$this->reply_to = $reply_to;
 	}
 }

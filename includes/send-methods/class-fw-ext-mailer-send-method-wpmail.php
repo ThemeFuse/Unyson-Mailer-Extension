@@ -38,15 +38,30 @@ class FW_Ext_Mailer_Send_Method_WPMail extends FW_Ext_Mailer_Send_Method {
 	 * @return bool|WP_Error
 	 */
 	public function send(FW_Ext_Mailer_Email $email, $settings_options_values, $data = array()) {
+		{
+			$headers = array();
+
+			$headers[] = 'Content-type: text/html; charset=utf-8';
+			$headers[] = 'From:'. htmlspecialchars($email->get_from_name(), null, 'UTF-8')
+			             .' <'. htmlspecialchars($email->get_from(), null, 'UTF-8') .'>';
+
+			if (method_exists($email, 'get_reply_to') && $email->get_reply_to()) {
+				if (is_array($email->get_reply_to())) {
+					foreach ($email->get_reply_to() as $to_address => $to_name) {
+						$headers[] = 'Reply-To:'. htmlspecialchars($to_name, null, 'UTF-8')
+						             .' <'. htmlspecialchars($to_address, null, 'UTF-8') .'>';
+					}
+				} else {
+					$headers[] = 'Reply-To:'. htmlspecialchars($email->get_reply_to(), null, 'UTF-8');
+				}
+			}
+		}
+
 		$result = wp_mail(
 			$email->get_to(),
 			$email->get_subject(),
 			$email->get_body(),
-			array(
-				'Content-type: text/html; charset=utf-8',
-				'From:'. htmlspecialchars($email->get_from_name(), null, 'UTF-8')
-				.' <'. htmlspecialchars($email->get_from(), null, 'UTF-8') .'>'
-			)
+			$headers
 		);
 
 		return $result
