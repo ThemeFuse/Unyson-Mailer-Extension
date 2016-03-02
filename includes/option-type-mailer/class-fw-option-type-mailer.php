@@ -7,8 +7,7 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 	/**
 	 * @internal
 	 */
-	public function _init() {
-	}
+	public function _init() {}
 
 	public function get_type() {
 		return 'mailer';
@@ -28,10 +27,6 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 		return array(
 			'label' => false,
 			'value' => array(),
-			/**
-			 * At the moment this is no effect because there is no mechanism to trigger the 'save'
-			 * from post option save deep to each shortcode options
-			 */
 			'fw-storage' => array(
 				'type' => 'wp-option',
 				'wp-option' => 'fw_ext_settings_options:mailer',
@@ -131,8 +126,6 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 	 * @internal
 	 */
 	protected function _render( $id, $option, $data ) {
-		$data['value'] = fw_ext( 'mailer' )->get_db_settings_option();
-
 		$wrapper_attr = $option['attr'];
 		unset($wrapper_attr['name'], $wrapper_attr['value']);
 
@@ -153,32 +146,9 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 	 * @return array|bool|int|string
 	 */
 	protected function _get_value_from_input( $option, $input_value ) {
-
-		if ( is_array( $input_value ) && ! empty( $input_value ) ) {
-			/**
-			 * Doing a database save in get_value_from_input() is wrong
-			 * because this is not an actual save.
-			 * But this option type use is limited, it's used only in one place
-			 * and it works, so we decided to not create a new "deep save trigger" mechanism
-			 * just for one option.
-			 * When such mechanism will be needed for general use, then we will figure out something.
-			 */
-			fw_ext( 'mailer' )->set_db_settings_option(
-				null,
-				fw_get_options_values_from_input(
-					$this->get_inner_options(),
-					$input_value
-				)
-			);
-		}
-
-		/**
-		 * Return "nothing"
-		 * Prevent private smtp data to be saved/duplicated in post meta (somewhere else)
-		 */
-		return array(
-			'time' => time(), // prevent options modal html cache
-		);
+		return (is_array( $input_value ) && ! empty( $input_value ))
+			? fw_get_options_values_from_input($this->get_inner_options(), $input_value)
+			: $option['value'];
 	}
 }
 
