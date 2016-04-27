@@ -126,6 +126,10 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 	 * @internal
 	 */
 	protected function _render( $id, $option, $data ) {
+		if (empty($data['value'])) {
+			$data['value'] = fw_db_option_storage_load($id, $option, $data['value']);
+		}
+
 		$wrapper_attr = $option['attr'];
 		unset($wrapper_attr['name'], $wrapper_attr['value']);
 
