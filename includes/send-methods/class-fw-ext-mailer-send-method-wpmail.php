@@ -43,9 +43,10 @@ class FW_Ext_Mailer_Send_Method_WPMail extends FW_Ext_Mailer_Send_Method {
 
 			$headers[] = 'Content-type: text/html; charset=utf-8';
 
-			if (trim($email->get_from_name())) {
-				$headers[] = 'From: '. htmlspecialchars($email->get_from_name(), null, 'UTF-8')
-					.( trim($email->get_from()) ? ' <'. htmlspecialchars($email->get_from(), null, 'UTF-8') .'>' : '' );
+			if (trim($email->get_from())) {
+				$headers[] = 'From:'
+					. (trim($email->get_from_name()) ? ' '. htmlspecialchars($email->get_from_name(), null, 'UTF-8') : '')
+					.' <'. htmlspecialchars($email->get_from(), null, 'UTF-8') .'>';
 			}
 
 			if (method_exists($email, 'get_reply_to') && $email->get_reply_to()) {
