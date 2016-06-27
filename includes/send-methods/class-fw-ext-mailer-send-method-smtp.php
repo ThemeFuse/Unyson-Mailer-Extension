@@ -146,8 +146,13 @@ class FW_Ext_Mailer_Send_Method_SMTP extends FW_Ext_Mailer_Send_Method {
 		$mailer->Password   = $config['password'];
 		$mailer->CharSet    = 'utf-8';
 
-		$mailer->From       = $email->get_from();
-		$mailer->FromName   = $email->get_from_name();
+		if (trim($email->get_from())) {
+			$mailer->From = $email->get_from();
+
+			if (trim($email->get_from_name())) {
+				$mailer->FromName = $email->get_from_name();
+			}
+		}
 
 		if (is_array($email->get_to())) {
 			foreach ($email->get_to() as $to_address) {
