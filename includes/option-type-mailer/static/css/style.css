@@ -1,3 +1,26 @@
 .fw-backend-option-type-mailer {
 	padding: 0;
 }
+
+/* test connection */
+
+.fw-backend-option-type-mailer .test-connection {
+	display: table;
+	width: 100%;
+}
+
+.fw-backend-option-type-mailer .test-connection > div {
+	display: table-row;
+}
+
+.fw-backend-option-type-mailer .test-connection > div > div {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.fw-backend-option-type-mailer .test-connection > div > div:last-child {
+	width: 1px;
+	padding-left: 10px;
+}
+
+/* test connection */

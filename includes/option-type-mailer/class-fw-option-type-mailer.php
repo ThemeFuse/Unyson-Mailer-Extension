@@ -100,7 +100,28 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 						'value' => '',
 					)
 				),
-			)
+			),
+			'text-connection-container' => array(
+				'label'         => false,
+				'desc'          => false,
+				'type'          => 'multi',
+				'inner-options' => array(
+					'test-connection' => array(
+						'type' => 'html-fixed',
+						'html' =>
+							'<div class="test-connection">'.
+							/**/'<div>'.
+							/**//**/'<div>'.
+							/**//**//**/'<input type="email" placeholder="'. esc_attr__('Test email destination', 'fw') .'" style="width:100%;">'.
+							/**//**/'</div>'.
+							/**//**/'<div>'.
+							/**//**//**/'<button class="button" type="button">'. esc_html__('Send a test email', 'fw') .'</button>'.
+							/**//**/'</div>'.
+							/**/'</div>'.
+							'</div>'
+					),
+				),
+			),
 		);
 	}
 

@@ -5,12 +5,16 @@
 			.each(function(){
 				var $option = $(this);
 
-				$(this).find('select[data-select-method]')
+				$option.find('select[data-select-method]')
 					.on('change', function(){
 						$option.find('.fw-backend-options-group[data-method]').hide();
 						$option.find('.fw-backend-options-group[data-method="'+ this.value +'"]').show();
 					})
 					.trigger('change');
+
+				$option.on('click', '.test-connection button', function(){
+					console.log('OK');
+				});
 			})
 			.addClass('initialized');
 	});
