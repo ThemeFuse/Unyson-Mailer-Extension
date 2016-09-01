@@ -36,11 +36,21 @@ class FW_Extension_Mailer extends FW_Extension
 		);
 	}
 
-	public function send($to, $subject, $message, $data = array())
+	/**
+	 * @param string $to
+	 * @param string $subject
+	 * @param string $message
+	 * @param array $data
+	 * @param array $settings Use this settings instead of db settings | Since 1.2.7
+	 * @return array {status: 0, message: '...'}
+	 */
+	public function send($to, $subject, $message, $data = array(), $settings = array())
 	{
-		$send_method = $this->get_send_method(
-			$this->get_db_settings_option('method')
-		);
+		if (empty($settings)) {
+			$settings = $this->get_db_settings_option();
+		}
+
+		$send_method = $this->get_send_method($settings['method']);
 
 		if (!$send_method) {
 			return array(
@@ -51,7 +61,7 @@ class FW_Extension_Mailer extends FW_Extension
 
 		if (is_wp_error(
 			$send_method_configuration = $send_method->prepare_settings_options_values(
-				$this->get_db_settings_option($send_method->get_id())
+				fw_akg($send_method->get_id(), $settings)
 			)
 		)) {
 			return array(
@@ -71,7 +81,7 @@ class FW_Extension_Mailer extends FW_Extension
 
 		$result = $send_method->send(
 			$email,
-			$this->get_db_settings_option($send_method->get_id()),
+			fw_akg($send_method->get_id(), $settings),
 			$data
 		);
 
