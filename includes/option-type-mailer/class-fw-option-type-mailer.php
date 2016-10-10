@@ -185,7 +185,7 @@ class FW_Option_Type_Mailer extends FW_Option_Type {
 	 * @internal
 	 */
 	public function _action_ajax_test_connection() {
-		if (!current_user_can('manage_options')) {
+		if (!current_user_can('edit_posts')) {
 			return wp_send_json_error(new WP_Error('forbidden', __('Forbidden', 'fw')));
 		} elseif (!is_email($to = FW_Request::POST('to'))) {
 			return wp_send_json_error(new WP_Error('forbidden', __('Invalid email', 'fw')));
