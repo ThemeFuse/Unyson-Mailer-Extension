@@ -8,3 +8,7 @@ $manifest['version'] = '1.2.8';
 $manifest['standalone'] = false;
 $manifest['display'] = false;
 $manifest['github_update'] = 'ThemeFuse/Unyson-Mailer-Extension';
+$manifest['github_repo'] = 'https://github.com/ThemeFuse/Unyson-Mailer-Extension';
+$manifest['uri'] = 'http://manual.unyson.io/en/latest/extension/forms/index.html#content';
+$manifest['author'] = 'ThemeFuse';
+$manifest['author_uri'] = 'http://themefuse.com/';
