@@ -31,6 +31,11 @@ class FW_Ext_Mailer_Send_Method_WPMail extends FW_Ext_Mailer_Send_Method {
 		return array();
 	}
 
+	private function make_email_header($address, $name) {
+		return (trim($name) ? ' '. htmlspecialchars($name, null, 'UTF-8') : '')
+			.' <'. htmlspecialchars($address, null, 'UTF-8') .'>';
+	}
+
 	/**
 	 * @param array $settings_options_values
 	 * @param FW_Ext_Mailer_Email $email
@@ -44,20 +49,24 @@ class FW_Ext_Mailer_Send_Method_WPMail extends FW_Ext_Mailer_Send_Method {
 			$headers[] = 'Content-type: text/html; charset=utf-8';
 
 			if (trim($email->get_from())) {
-				$headers[] = 'From:'
-					. (trim($email->get_from_name()) ? ' '. htmlspecialchars($email->get_from_name(), null, 'UTF-8') : '')
-					.' <'. htmlspecialchars($email->get_from(), null, 'UTF-8') .'>';
+				$headers[] = 'From:'. $this->make_email_header($email->get_from(), $email->get_from_name());
 			}
 
 			if (method_exists($email, 'get_reply_to') && $email->get_reply_to()) {
 				if (is_array($email->get_reply_to())) {
-					foreach ($email->get_reply_to() as $to_address => $to_name) {
-						$headers[] = 'Reply-To: '. htmlspecialchars($to_name, null, 'UTF-8')
-						             .' <'. htmlspecialchars($to_address, null, 'UTF-8') .'>';
+					foreach ($email->get_reply_to() as $_address => $_name) {
+						$headers[] = 'Reply-To:'. $this->make_email_header($_address, $_name);
 					}
 				} else {
-					$headers[] = 'Reply-To: '. htmlspecialchars($email->get_reply_to(), null, 'UTF-8');
+					$headers[] = 'Reply-To:'. $this->make_email_header($email->get_reply_to(), '');
 				}
+			}
+
+			foreach ($email->get_cc() as $_address => $_name) {
+				$headers[] = 'Cc:'. $this->make_email_header($_address, $_name);
+			}
+			foreach ($email->get_bcc() as $_address => $_name) {
+				$headers[] = 'Bcc:'. $this->make_email_header($_address, $_name);
 			}
 		}
 

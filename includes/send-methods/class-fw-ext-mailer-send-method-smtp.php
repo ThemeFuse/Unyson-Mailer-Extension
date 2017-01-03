@@ -155,8 +155,8 @@ class FW_Ext_Mailer_Send_Method_SMTP extends FW_Ext_Mailer_Send_Method {
 		}
 
 		if (is_array($email->get_to())) {
-			foreach ($email->get_to() as $to_address) {
-				$mailer->AddAddress($to_address);
+			foreach ($email->get_to() as $_address) {
+				$mailer->AddAddress($_address);
 			}
 		} else {
 			$mailer->AddAddress($email->get_to());
@@ -164,12 +164,19 @@ class FW_Ext_Mailer_Send_Method_SMTP extends FW_Ext_Mailer_Send_Method {
 
 		if (method_exists($email, 'get_reply_to') && $email->get_reply_to()) {
 			if (is_array($email->get_reply_to())) {
-				foreach ($email->get_reply_to() as $to_address => $to_name) {
-					$mailer->addReplyTo($to_address, $to_name);
+				foreach ($email->get_reply_to() as $_address => $_name) {
+					$mailer->addReplyTo($_address, $_name);
 				}
 			} else {
 				$mailer->addReplyTo($email->get_reply_to());
 			}
+		}
+
+		foreach ($email->get_cc() as $_address => $_name) {
+			$mailer->addCC($_address, $_name);
+		}
+		foreach ($email->get_bcc() as $_address => $_name) {
+			$mailer->addBCC($_address, $_name);
 		}
 
 		$mailer->Subject = $email->get_subject();

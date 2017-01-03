@@ -40,7 +40,7 @@ class FW_Extension_Mailer extends FW_Extension
 	 * @param string $to
 	 * @param string $subject
 	 * @param string $message
-	 * @param array $data
+	 * @param array $data 'reply_to', 'cc', 'bcc'
 	 * @param array $settings Use this settings instead of db settings | Since 1.2.7
 	 * @return array {status: 0, message: '...'}
 	 */
@@ -78,6 +78,19 @@ class FW_Extension_Mailer extends FW_Extension
 		if (!empty($data['reply_to']) && method_exists($email, 'set_reply_to')) {
 			$email->set_reply_to($data['reply_to']);
 		}
+		if (!empty($data['cc'])) {
+			foreach ($data['cc'] as $_address => $_name) {
+				$email->add_cc($_address, $_name);
+			}
+		}
+		if (!empty($data['bcc'])) {
+			foreach ($data['bcc'] as $_address => $_name) {
+				$email->add_bcc($_address, $_name);
+			}
+		}
+
+		/** @since 1.2.10 */
+		$email = apply_filters('fw_ext_mailer_before_send', $email);
 
 		$result = $send_method->send(
 			$email,

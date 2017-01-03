@@ -3,9 +3,13 @@
 class FW_Ext_Mailer_Email {
 	protected $from_name = '';
 	protected $from = '';
-	protected $to = array();
 	protected $subject = '';
 	protected $body = '';
+
+	// 'john@smith.com' => 'John Smith'
+	protected $to = array();
+	protected $cc = array();
+	protected $bcc = array();
 
 	/**
 	 * @var string|array array('email' => 'Name')
@@ -80,5 +84,39 @@ class FW_Ext_Mailer_Email {
 	 */
 	public function set_reply_to($reply_to) {
 		$this->reply_to = $reply_to;
+	}
+
+	/**
+	 * @param string $email
+	 * @param string $name
+	 * @since 1.2.10
+	 */
+	public function add_cc($email, $name = '') {
+		$this->cc[ $email ] = $name;
+	}
+
+	/**
+	 * @return array
+	 * @since 1.2.10
+	 */
+	public function get_cc() {
+		return $this->cc;
+	}
+
+	/**
+	 * @param string $email
+	 * @param string $name
+	 * @since 1.2.10
+	 */
+	public function add_bcc($email, $name = '') {
+		$this->bcc[ $email ] = $name;
+	}
+
+	/**
+	 * @return array
+	 * @since 1.2.10
+	 */
+	public function get_bcc() {
+		return $this->bcc;
 	}
 }
