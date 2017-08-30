@@ -23,7 +23,7 @@
 					var $button = $(this).attr('disabled', 'disabled');
 
 					{ // <input name="{prefix}...">
-						var namePrefix = $option.find('.test-connection-wrapper > input:first').attr('name');
+						var namePrefix = $option.find('.test-connection-wrapper input:first').attr('name');
 
 						namePrefix = namePrefix.split('][');
 						namePrefix.pop();
